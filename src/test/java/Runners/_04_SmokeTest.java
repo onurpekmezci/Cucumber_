@@ -7,10 +7,8 @@ import io.cucumber.testng.CucumberOptions;
         tags = "@Smoketest",
         features = {"src/test/java/FeatureFiles/"},
         glue = {"StepDefinitions"} ,
-        plugin= {"html:target//cucumber-reports.html"}
-
-
-
+       // plugin= {"html:target//cucumber-reports.html"}
+        plugin= {"pretty","html:target/site/cucumber-pretty","json:target/cucumber/cucumber.json"} // jenkins için düzenleme
 
 )
 public class _04_SmokeTest extends AbstractTestNGCucumberTests {
