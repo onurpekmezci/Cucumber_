@@ -9,7 +9,7 @@ import org.testng.annotations.Listeners;
 
 
 @CucumberOptions(
-        tags = "@Regression ",
+        tags = "@Regression",
         features = {"src/test/java/FeatureFiles/"},
         glue = {"StepDefinitions"}
 
