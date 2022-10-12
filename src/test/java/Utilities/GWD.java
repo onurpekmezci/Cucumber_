@@ -21,6 +21,11 @@ public class GWD {
     private static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
     public static ThreadLocal<String> threadBrowserName = new ThreadLocal<>();
 
+    public static boolean runningFromIntelliJ() {
+        String classPath = System.getProperty("java.class.path");
+        return classPath.contains("idea_rt.jar");
+    }
+
     public static WebDriver getdriver() {
 
         //Bana neler lazım:  1 browser tipi lazım burada ona göre oluşturucam
@@ -33,7 +38,7 @@ public class GWD {
         Logger.getLogger("").setLevel(Level.SEVERE);
         System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "Error");
 
-        if (threadBrowserName.get()==null)  /// paralel çalışmayan yani xml den çalışmayan testler için genel olarak çalıştırma
+        if (threadBrowserName.get() == null)  /// paralel çalışmayan yani xml den çalışmayan testler için genel olarak çalıştırma
             threadBrowserName.set("chrome");
 
         if (threadDriver.get() == null) {
@@ -45,11 +50,14 @@ public class GWD {
                 case "chrome":
                     System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
 
-                    threadDriver.set(new ChromeDriver());
 
-                    ChromeOptions options=new ChromeOptions();
-                    options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--window-size=1400,2400");
-                    threadDriver.set(new ChromeDriver(options)); // bu thread e chrome istenmişşse ve yoksa bir tane ekleniyor
+                    if (!runningFromIntelliJ()) {
+                        ChromeOptions options = new ChromeOptions();
+                        options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--window-size=1400,2400");
+                        threadDriver.set(new ChromeDriver(options)); // bu thread e chrome istenmişşse ve yoksa bir tane ekleniyor
+                    } else {
+                        threadDriver.set(new ChromeDriver());
+                    }
                     break;
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
