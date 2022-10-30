@@ -49,11 +49,12 @@ public class GWD {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
 
-                    ChromeOptions options=new ChromeOptions();
-                    options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--window-size=1400,2400");
-                    threadDriver.set(new ChromeDriver(options)); // bu thread e chrome istenmişşse ve yoksa bir tane ekleniyor
-
-
+                    if (!runningFromIntelliJ()) {
+                        ChromeOptions options = new ChromeOptions();
+                        options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--window-size=1400,2400");
+                        threadDriver.set(new ChromeDriver(options)); // bu thread e chrome istenmişşse ve yoksa bir tane ekleniyor
+                    } else
+                        threadDriver.set(new ChromeDriver());
                     break;
 
                 case "firefox":
@@ -90,7 +91,6 @@ public class GWD {
     }
 
 
-
     public static void Bekle(int saniye) {
         try {
             Thread.sleep(saniye * 1000);
@@ -99,4 +99,9 @@ public class GWD {
         }
     }
 
+    public static boolean runningFromIntelliJ() {
+        String classPath = System.getProperty("java.class.path");
+        return classPath.contains("idea_rt.jar");
+
+    }
 }
