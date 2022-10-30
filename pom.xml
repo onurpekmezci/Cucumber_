@@ -96,6 +96,8 @@
             <artifactId>cucumber-reporting</artifactId>
             <version>5.7.2</version>
         </dependency>
+
+
         <!-- JDBC için eklendi -->
         <dependency>
             <groupId>mysql</groupId>
@@ -154,29 +156,29 @@
 
     <!--    </build>-->
 
-    <!--    <build>-->
-    <!--        <plugins>-->
-    <!--            <plugin>&lt;!&ndash;derlemek için&ndash;&gt;-->
-    <!--                <groupId>org.apache.maven.plugins</groupId>-->
-    <!--                <artifactId>maven-surefire-plugin</artifactId>-->
-    <!--                <version>3.0.0-M1</version>-->
-    <!--                <configuration>-->
+    <build>
+        <plugins>
+            <plugin><!--derlemek için-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
 
-    <!--                    <includes>-->
-    <!--                        &lt;!&ndash; for  run class or classes  /:bulunduğu lokasyonu bütün klasörlere göre bulabiliyor   &ndash;&gt;-->
-    <!--                        <include>/_04_SmokeTest.java</include>-->
-    <!--                    </includes>-->
-    <!--                    <testFailureIgnore>true</testFailureIgnore>-->
+                    <includes>
+                        <!-- for  run class or classes  **/:bulunduğu lokasyonu bütün klasörlere göre bulabiliyor   -->
+                        <include>**/_04_TestRunnerSmoke.java</include>
+                    </includes>
+                    <testFailureIgnore>true</testFailureIgnore>
 
-    <!--                </configuration>-->
-    <!--            </plugin>-->
-    <!--        </plugins>-->
-    <!--    </build>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-    <profiles>
+    <profiles> <!-- jenkins -->
 
         <profile>
-<id>Smoke_yeni</id>
+            <id>Smoke_yeni</id>
             <build>
                 <plugins>
                     <plugin><!--derlemek için-->
